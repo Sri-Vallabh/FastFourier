@@ -8,9 +8,14 @@ Public Class Form1
     Private flowLayoutPanel As FlowLayoutPanel
     Private plotView As PlotView
     Private splitContainer As SplitContainer
-    Private nyquistCheckBox As CheckBox
+    Private toggleButton As Button
+    Private showNyquist As Boolean = True
+    Private selectedFilePath As String = ""
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ' Maximize the form to start in full screen mode
+        Me.WindowState = FormWindowState.Maximized
+
         ' Initialize SplitContainer
         splitContainer = New SplitContainer With {
             .Dock = DockStyle.Fill,
@@ -28,15 +33,17 @@ Public Class Form1
             .Dock = DockStyle.Fill
         }
 
-        ' Initialize CheckBox for Nyquist frequency display option
-        nyquistCheckBox = New CheckBox With {
-            .Text = "Display up to Nyquist frequency",
-            .Dock = DockStyle.Top
+        ' Initialize Toggle Button
+        toggleButton = New Button With {
+            .Text = "Show Full Spectrum",
+            .Dock = DockStyle.Top,
+            .Height = 30
         }
+        AddHandler toggleButton.Click, AddressOf ToggleButton_Click
 
-        ' Add FlowLayoutPanel and CheckBox to SplitContainer Panel1
+        ' Add FlowLayoutPanel and Toggle Button to SplitContainer Panel1
         splitContainer.Panel1.Controls.Add(flowLayoutPanel)
-        splitContainer.Panel1.Controls.Add(nyquistCheckBox)
+        splitContainer.Panel1.Controls.Add(toggleButton)
         ' Add PlotView to SplitContainer Panel2
         splitContainer.Panel2.Controls.Add(plotView)
 
@@ -71,9 +78,29 @@ Public Class Form1
         Next
     End Sub
 
+    Private Sub ToggleButton_Click(sender As Object, e As EventArgs)
+        showNyquist = Not showNyquist
+        If showNyquist Then
+            toggleButton.Text = "Show Full Spectrum"
+        Else
+            toggleButton.Text = "Show Up to Nyquist"
+        End If
+        ' Refresh the plot
+        RefreshPlot()
+    End Sub
+
     Private Sub FileButton_Click(sender As Object, e As EventArgs)
-        Dim button As Button = CType(sender, Button)
-        Dim filePath As String = CType(button.Tag, String)
+        ' Update the selected file and refresh the plot
+        selectedFilePath = CType(sender, Button).Tag.ToString()
+        RefreshPlot()
+    End Sub
+
+    Private Sub RefreshPlot()
+        If String.IsNullOrEmpty(selectedFilePath) Then
+            Return
+        End If
+
+        Dim filePath As String = selectedFilePath
 
         ' Read all lines from the file and convert to Double
         Dim lines() As String = File.ReadAllLines(filePath)
@@ -93,7 +120,7 @@ Public Class Form1
 
         ' Determine the range to display
         Dim displayLength As Integer
-        If nyquistCheckBox.Checked Then
+        If showNyquist Then
             displayLength = magnitudes.Length \ 2
         Else
             displayLength = magnitudes.Length
@@ -106,7 +133,7 @@ Public Class Form1
         Next
 
         ' Plot the frequency domain
-        Dim plotModel As New PlotModel With {.Title = "Frequency Domain - " & button.Text}
+        Dim plotModel As New PlotModel With {.Title = "Frequency Domain - " & Path.GetFileName(filePath)}
         Dim lineSeries As New LineSeries
         For i As Integer = 0 To displayLength - 1
             lineSeries.Points.Add(New DataPoint(frequencies(i), magnitudes(i)))
