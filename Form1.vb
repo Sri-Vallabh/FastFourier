@@ -125,13 +125,15 @@ Public Class Form1
         Else
             displayLength = magnitudes.Length
         End If
+        Console.WriteLine("Length of samples array: " & samples.Length)
+        Console.WriteLine("Length of magnitudes array: " & magnitudes.Length)
 
         ' Prepare data for plotting
         Dim frequencies(displayLength - 1) As Double
         For i As Integer = 0 To displayLength - 1
             frequencies(i) = i * sampleRate / magnitudes.Length
         Next
-
+        Console.WriteLine("final freq: " & frequencies(displayLength - 1))
         ' Plot the frequency domain
         Dim plotModel As New PlotModel With {.Title = "Frequency Domain - " & Path.GetFileName(filePath)}
         Dim lineSeries As New LineSeries
