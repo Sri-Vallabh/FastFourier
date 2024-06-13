@@ -8,6 +8,7 @@ Public Class Form1
     Private flowLayoutPanel As FlowLayoutPanel
     Private plotView As PlotView
     Private splitContainer As SplitContainer
+    Private nyquistCheckBox As CheckBox
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Initialize SplitContainer
@@ -27,8 +28,15 @@ Public Class Form1
             .Dock = DockStyle.Fill
         }
 
-        ' Add FlowLayoutPanel to SplitContainer Panel1
+        ' Initialize CheckBox for Nyquist frequency display option
+        nyquistCheckBox = New CheckBox With {
+            .Text = "Display up to Nyquist frequency",
+            .Dock = DockStyle.Top
+        }
+
+        ' Add FlowLayoutPanel and CheckBox to SplitContainer Panel1
         splitContainer.Panel1.Controls.Add(flowLayoutPanel)
+        splitContainer.Panel1.Controls.Add(nyquistCheckBox)
         ' Add PlotView to SplitContainer Panel2
         splitContainer.Panel2.Controls.Add(plotView)
 
@@ -83,16 +91,24 @@ Public Class Form1
             magnitudes(i) = fftResults(i).Magnitude()
         Next
 
+        ' Determine the range to display
+        Dim displayLength As Integer
+        If nyquistCheckBox.Checked Then
+            displayLength = magnitudes.Length \ 2
+        Else
+            displayLength = magnitudes.Length
+        End If
+
         ' Prepare data for plotting
-        Dim frequencies(magnitudes.Length - 1) As Double
-        For i As Integer = 0 To magnitudes.Length - 1
+        Dim frequencies(displayLength - 1) As Double
+        For i As Integer = 0 To displayLength - 1
             frequencies(i) = i * sampleRate / magnitudes.Length
         Next
 
         ' Plot the frequency domain
         Dim plotModel As New PlotModel With {.Title = "Frequency Domain - " & button.Text}
         Dim lineSeries As New LineSeries
-        For i As Integer = 0 To magnitudes.Length - 1
+        For i As Integer = 0 To displayLength - 1
             lineSeries.Points.Add(New DataPoint(frequencies(i), magnitudes(i)))
         Next
         plotModel.Series.Add(lineSeries)
