@@ -62,7 +62,7 @@ Public Class Form2
 
         ' Initialize Expected Time Label
         expectedTimeLabel = New Label With {
-            .Text = "Expected time: 0.0000 s",
+            .Text = "Expected time on x86 : 0.0000 s",
             .Dock = DockStyle.Top,
             .Height = 30,
             .TextAlign = ContentAlignment.MiddleCenter
@@ -161,7 +161,7 @@ Public Class Form2
         Dim expectedTime As Double = a * n * n + b * n + c
 
         ' Display the expected time
-        expectedTimeLabel.Text = "Expected time: " & expectedTime.ToString("F4") & " s"
+        expectedTimeLabel.Text = "Expected time on x86 : " & expectedTime.ToString("F4") & " s"
 
         ' Start the stopwatch
         stopwatch = Stopwatch.StartNew()

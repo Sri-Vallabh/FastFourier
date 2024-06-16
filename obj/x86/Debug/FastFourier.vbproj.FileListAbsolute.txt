@@ -1,12 +1,6 @@
-C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\FastFourier.exe
-C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\FastFourier.pdb
-C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\FastFourier.xml
 C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.Form1.resources
 C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.Resources.resources
 C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.vbproj.GenerateResource.Cache
-C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.exe
-C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.xml
-C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.pdb
 C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\OxyPlot.dll
 C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\OxyPlot.WindowsForms.dll
 C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\OxyPlot.xml
@@ -14,5 +8,11 @@ C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\OxyPlot.WindowsForms.
 C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.vbproj.AssemblyReference.cache
 C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.vbproj.CoreCompileInputs.cache
 C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFour.3B98C50C.Up2Date
-C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\FastFourier.exe.config
 C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.Form2.resources
+C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\FinalApplication.exe.config
+C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\FinalApplication.exe
+C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\FinalApplication.pdb
+C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\FinalApplication.xml
+C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FinalApplication.exe
+C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FinalApplication.xml
+C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FinalApplication.pdb
