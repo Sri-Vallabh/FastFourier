@@ -14,3 +14,5 @@ C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\OxyPlot.WindowsForms.
 C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.vbproj.AssemblyReference.cache
 C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.vbproj.CoreCompileInputs.cache
 C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFour.3B98C50C.Up2Date
+C:\Users\tsriv\Documents\FastFourier\FastFourier\bin\Debug\FastFourier.exe.config
+C:\Users\tsriv\Documents\FastFourier\FastFourier\obj\x86\Debug\FastFourier.Form2.resources

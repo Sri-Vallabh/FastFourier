@@ -16,6 +16,7 @@ Public Class Form2
     Private showNyquist As Boolean = True
     Private selectedFilePath As String = ""
     Private buttonToForm1 As Button
+    Private expectedTimeLabel As Label
     Private stopwatchLabel As Label
     Private stopwatch As Stopwatch
     Private plotTimer As System.Windows.Forms.Timer
@@ -59,17 +60,26 @@ Public Class Form2
         }
         AddHandler buttonToForm1.Click, AddressOf ButtonToForm1_Click
 
-        ' Initialize Stopwatch Label
-        stopwatchLabel = New Label With {
-            .Text = "Time taken: 0 s",
+        ' Initialize Expected Time Label
+        expectedTimeLabel = New Label With {
+            .Text = "Expected time: 0.0000 s",
             .Dock = DockStyle.Top,
             .Height = 30,
             .TextAlign = ContentAlignment.MiddleCenter
         }
 
-        ' Add FlowLayoutPanel, Toggle Button, Stopwatch Label, and ButtonToForm1 to SplitContainer Panel1
+        ' Initialize Stopwatch Label
+        stopwatchLabel = New Label With {
+            .Text = "Time taken: 0.0000 s",
+            .Dock = DockStyle.Top,
+            .Height = 30,
+            .TextAlign = ContentAlignment.MiddleCenter
+        }
+
+        ' Add FlowLayoutPanel, Toggle Button, Expected Time Label, Stopwatch Label, and ButtonToForm1 to SplitContainer Panel1
         splitContainer.Panel1.Controls.Add(flowLayoutPanel)
         splitContainer.Panel1.Controls.Add(toggleButton)
+        splitContainer.Panel1.Controls.Add(expectedTimeLabel)
         splitContainer.Panel1.Controls.Add(stopwatchLabel)
         splitContainer.Panel1.Controls.Add(buttonToForm1)
 
@@ -138,6 +148,21 @@ Public Class Form2
             samples(i) = Convert.ToDouble(lines(i))
         Next
 
+        ' Calculate the expected time based on the given formula
+        Dim n As Integer = lines.Length
+        Dim a As Double
+        If showNyquist Then
+            a = 1.6153487790483 * Math.Pow(10, -7)
+        Else
+            a = 2 * 1.6153487790483 * Math.Pow(10, -7)
+        End If
+        Dim b As Double = -0.00158476827409931
+        Dim c As Double = 10.1600099591547
+        Dim expectedTime As Double = a * n * n + b * n + c
+
+        ' Display the expected time
+        expectedTimeLabel.Text = "Expected time: " & expectedTime.ToString("F4") & " s"
+
         ' Start the stopwatch
         stopwatch = Stopwatch.StartNew()
 
@@ -185,7 +210,7 @@ Public Class Form2
             plotTimer.Dispose()
 
             ' Update the label with the final time
-            stopwatchLabel.Text = "Time taken: " & stopwatch.Elapsed.TotalSeconds.ToString("F2") & " s"
+            stopwatchLabel.Text = "Time taken: " & stopwatch.Elapsed.TotalSeconds.ToString("F4") & " s"
 
             ' Plot the frequency domain
             Dim plotModel As New PlotModel With {.Title = "DFT Frequency Domain - " & Path.GetFileName(filePath)}
@@ -208,7 +233,7 @@ Public Class Form2
 
     Private Sub UpdateStopwatchLabel(sender As Object, e As EventArgs)
         ' Update the stopwatch label with the current elapsed time
-        stopwatchLabel.Text = "Time taken: " & stopwatch.Elapsed.TotalSeconds.ToString("F2") & " s"
+        stopwatchLabel.Text = "Time taken: " & stopwatch.Elapsed.TotalSeconds.ToString("F4") & " s"
     End Sub
 
     Private Function DFT(samples() As Double, token As CancellationToken) As Complex()
@@ -228,7 +253,6 @@ Public Class Form2
         Return result
     End Function
 
-
     Private Sub ButtonToForm1_Click(sender As Object, e As EventArgs)
         ' Open Form1 and close Form2
         Dim form1 As New Form1()
@@ -236,4 +260,3 @@ Public Class Form2
         Me.Hide()
     End Sub
 End Class
-
