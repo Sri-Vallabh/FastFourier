@@ -11,6 +11,7 @@ Public Class Form1
     Private toggleButton As Button
     Private showNyquist As Boolean = True
     Private selectedFilePath As String = ""
+    Private button1 As Button
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Maximize the form to start in full screen mode
@@ -41,9 +42,19 @@ Public Class Form1
         }
         AddHandler toggleButton.Click, AddressOf ToggleButton_Click
 
-        ' Add FlowLayoutPanel and Toggle Button to SplitContainer Panel1
+        ' Initialize Button1
+        button1 = New Button With {
+            .Text = "Change to DFT",
+            .Dock = DockStyle.Top,
+            .Height = 30
+        }
+        AddHandler button1.Click, AddressOf Button1_Click
+
+        ' Add FlowLayoutPanel, Toggle Button, and Button1 to SplitContainer Panel1
         splitContainer.Panel1.Controls.Add(flowLayoutPanel)
         splitContainer.Panel1.Controls.Add(toggleButton)
+        splitContainer.Panel1.Controls.Add(button1)
+
         ' Add PlotView to SplitContainer Panel2
         splitContainer.Panel2.Controls.Add(plotView)
 
@@ -53,7 +64,7 @@ Public Class Form1
         ' Get the current directory
         Dim currentDirectory As String = My.Computer.FileSystem.CurrentDirectory
         ' Navigate three directories up
-        Dim folderPath As String = Path.GetFullPath(Path.Combine(currentDirectory, "..\..\..", "Vowel_recordings"))
+        Dim folderPath As String = Path.GetFullPath(Path.Combine(currentDirectory, "Vowel_recordings"))
 
         ' Check if the folder exists
         If Not Directory.Exists(folderPath) Then
@@ -135,7 +146,7 @@ Public Class Form1
         Next
         Console.WriteLine("final freq: " & frequencies(displayLength - 1))
         ' Plot the frequency domain
-        Dim plotModel As New PlotModel With {.Title = "Frequency Domain - " & Path.GetFileName(filePath)}
+        Dim plotModel As New PlotModel With {.Title = "FFT Frequency Domain - " & Path.GetFileName(filePath)}
         Dim lineSeries As New LineSeries
         For i As Integer = 0 To displayLength - 1
             lineSeries.Points.Add(New DataPoint(frequencies(i), magnitudes(i)))
@@ -153,6 +164,13 @@ Public Class Form1
         FourierTransform.FFT(complexSamples, FourierTransform.Direction.Forward)
         Return complexSamples
     End Function
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
+        ' Open Form2 and close Form1
+        Dim form2 As New Form2()
+        form2.Show()
+        Me.Hide()
+    End Sub
 End Class
 
 
@@ -215,4 +233,10 @@ Public Class Complex
         Dim expReal As Double = Math.Exp(c.Real)
         Return New Complex(expReal * Math.Cos(c.Imaginary), expReal * Math.Sin(c.Imaginary))
     End Function
+
+    Public Shared ReadOnly Property Zero As Complex
+        Get
+            Return New Complex(0, 0)
+        End Get
+    End Property
 End Class
